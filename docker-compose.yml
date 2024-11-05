@@ -1,13 +1,26 @@
-version: '3.8'  # Specify the version of Docker Compose
 
 services:
   backend:
     build: 
-      context: .  # Build context is the current directory
-      dockerfile: Dockerfile  # Specify your Dockerfile
+      context: ./  # Path to your backend directory
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"  # Map port 3000 of the container to port 3000 of the host
+      - "3000:3000"
     environment:
-      - PORT=3000  # Environment variable for the port
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongo:27017/flightbooking
     volumes:
-      - .:/app  # Mount the current directory to /app in the container
+      - ./flight-booking-backend:/app
+    depends_on:
+      - mongo
+
+
+  mongo:
+    image: mongo:4.2
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
