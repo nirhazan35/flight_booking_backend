@@ -1,16 +1,20 @@
-# backend/Dockerfile
-FROM node:18
+# Use the Node.js image
+FROM node:14
 
-# Create app directory
-WORKDIR /usr/src/app
+# Create and set the working directory
+WORKDIR /app
 
-# Copy package.json and install dependencies
+# Copy package.json and package-lock.json to the container
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
-# Copy source code
+# Copy the rest of the application code
 COPY . .
 
-# Expose the port and start the server
-EXPOSE 5000
-CMD [ "npm", "run", "dev" ]
+# Expose the application port
+EXPOSE 3000
+
+# Run the application
+CMD ["node", "index.js"]
