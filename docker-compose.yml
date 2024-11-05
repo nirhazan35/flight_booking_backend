@@ -1,8 +1,13 @@
-version: '3'
+version: '3.8'  # Specify the version of Docker Compose
+
 services:
   backend:
-    build: .
+    build: 
+      context: .  # Build context is the current directory
+      dockerfile: Dockerfile  # Specify your Dockerfile
     ports:
-      - "3000:3000"
+      - "3000:3000"  # Map port 3000 of the container to port 3000 of the host
     environment:
-      - PORT=3000
+      - PORT=3000  # Environment variable for the port
+    volumes:
+      - .:/app  # Mount the current directory to /app in the container
